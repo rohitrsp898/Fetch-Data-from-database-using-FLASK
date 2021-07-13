@@ -1,3 +1,4 @@
+#Required modules 
 from flask import Flask,render_template,request
 from mysql import connector
 import mysql.connector
@@ -58,7 +59,7 @@ def index():
 
 
 
-
+# main 
 if __name__=="__main__":
     app.run(debug=True)
 
