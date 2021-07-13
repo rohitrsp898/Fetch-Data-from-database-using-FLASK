@@ -1,15 +1,7 @@
-
-
 {% extends 'base.html' %}
 
-
-
-
 {% block head %}
-
 {% endblock %}
-
-
 
 
 {% block body %}
@@ -22,44 +14,48 @@
         <!--  Database dropdown      -->
             <label> Choose a database :  </label><SELECT name="database">
 
-            {% for data in datadb %}
-            {% if data[0] == database_name %}
+        <!--  Display all the databases name in dropdown list     -->
+            {% for data in datadb %}        
+            {% if data[0] == database_name %}        <!--  selected database name will be diplayed after page reload   -->
                 <option value="{{data[0]}}" selected>{{ data[0] }}</option>
             {% else %}
-                <option value="{{data[0]}}">{{ data[0] }}</option>
+                <option value="{{data[0]}}">{{ data[0] }}</option>  <!--  Display all the databases name in dropdown list     -->
             {% endif %}
 
             {% endfor %}
             </SELECT>
+            
+        <!--  selected button for post method to get data from dropdown and sent to app.py   -->
             <input type="submit" value="Selected" name="db_select_btn"><br><br>
 
         <!--Table dropdown-->
-            {% if tables|length <1 %}
+            {% if tables|length <1 %}       <!--  If database has no table then it will display <h1> tag -->
             <h1>There are no Table in {{database_name}}. Create new table below.</h1>
 
             {% else %}
 
-            <label>Choose a Table : </label><SELECT name="table">
+            <label>Choose a Table : </label><SELECT name="table">     <!--  Display all the tables name in dropdown list       -->
             {% for table in tables %}
-                {% if table[0] == table_name %}
+                {% if table[0] == table_name %}         <!--  selected tables name will be diplayed after page reload   -->
                     <option value="{{table[0]}}" selected>{{ table_name }}</option>
                 {% else %}
-                    <option value="{{table[0]}}">{{ table[0] }}</option>
+                    <option value="{{table[0]}}">{{ table[0] }}</option>   <!--  Display all the Tables name in dropdown list     -->
                 {% endif %}
 
             {% endfor %}
             </SELECT>
 
-
+         <!--  selected button for post method to get data from dropdown and sent to app.py   -->
             <input type="submit" value="Selected" name="db_select_btn"><br><br>
 
             {% endif %}
 
 
-
+        <!--  print selected database and table name in the label   -->
             <label> You are using {{table_name}} table of  {{database_name}} database.  </label> <br><br>
-            <label> Enter you Query Here </label> <br><br>
 
+        <!--  Query label and Textarea to write SQL Query  -->
+            <label> Enter you Query Here </label> <br><br>
             <textarea id="sql_query" name="sql_query" cols="40" rows="5" autocomplete="on">{{query}}</textarea><br><br>
             <input type="submit" id="query" value="Query">
 
@@ -69,7 +65,9 @@
     <div style="flat:left;"><h1> </h1></div>
 
     <div id="data" align="center" style="float: left"  >
-        <h1>{{database_name}}     {{table_name}}</h1>
+        <h1>{{database_name}}  |   {{table_name}}</h1>
+
+    <!--  To display column name for the data  -->
         <table class="styled-table" align="right">
             <tr>
                 {% for head in header%}
@@ -77,6 +75,8 @@
 
                 {% endfor %}
             </tr>
+
+    <!--  To display data in the table format -->
             {% for row in result%}
             <tr>
                 {% for data in row%}
