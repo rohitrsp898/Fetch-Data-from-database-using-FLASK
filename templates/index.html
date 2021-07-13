@@ -1,0 +1,93 @@
+
+
+{% extends 'base.html' %}
+
+
+
+
+{% block head %}
+
+{% endblock %}
+
+
+
+
+{% block body %}
+
+<div >
+    <div align="left"style="float: left; width:500px;" >
+
+        <form action="/" method="post" >
+
+        <!--  Database dropdown      -->
+            <label> Choose a database :  </label><SELECT name="database">
+
+            {% for data in datadb %}
+            {% if data[0] == database_name %}
+                <option value="{{data[0]}}" selected>{{ data[0] }}</option>
+            {% else %}
+                <option value="{{data[0]}}">{{ data[0] }}</option>
+            {% endif %}
+
+            {% endfor %}
+            </SELECT>
+            <input type="submit" value="Selected" name="db_select_btn"><br><br>
+
+        <!--Table dropdown-->
+            {% if tables|length <1 %}
+            <h1>There are no Table in {{database_name}}. Create new table below.</h1>
+
+            {% else %}
+
+            <label>Choose a Table : </label><SELECT name="table">
+            {% for table in tables %}
+                {% if table[0] == table_name %}
+                    <option value="{{table[0]}}" selected>{{ table_name }}</option>
+                {% else %}
+                    <option value="{{table[0]}}">{{ table[0] }}</option>
+                {% endif %}
+
+            {% endfor %}
+            </SELECT>
+
+
+            <input type="submit" value="Selected" name="db_select_btn"><br><br>
+
+            {% endif %}
+
+
+
+            <label> You are using {{table_name}} table of  {{database_name}} database.  </label> <br><br>
+            <label> Enter you Query Here </label> <br><br>
+
+            <textarea id="sql_query" name="sql_query" cols="40" rows="5" autocomplete="on">{{query}}</textarea><br><br>
+            <input type="submit" id="query" value="Query">
+
+
+        </form>
+    </div>
+    <div style="flat:left;"><h1> </h1></div>
+
+    <div id="data" align="center" style="float: left"  >
+        <h1>{{database_name}}     {{table_name}}</h1>
+        <table class="styled-table" align="right">
+            <tr>
+                {% for head in header%}
+                <th>{{head[0]}}</th>
+
+                {% endfor %}
+            </tr>
+            {% for row in result%}
+            <tr>
+                {% for data in row%}
+                <td>{{ data }}</td>
+                {% endfor %}
+            {% endfor %}
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
